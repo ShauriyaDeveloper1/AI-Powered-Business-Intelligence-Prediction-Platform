@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Business Intelligence Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="background-glow"></div>
+
+    <main class="dashboard-shell">
+        <header id="topbar" class="topbar">
+            <div class="brand">AI Business Intelligence Dashboard</div>
+            <div class="topbar-actions">
+                <span id="welcomeUser" class="muted hidden"></span>
+                <button id="logoutBtn" class="btn ghost hidden">Logout</button>
+            </div>
+        </header>
+
+        <section id="loginSection" class="auth-stage">
+            <div class="auth-brand">
+                <div class="auth-logo-mark" aria-hidden="true"></div>
+                <h1>AI Business <span>Intelligence Platform</span></h1>
+                <p>Secure access for intelligent analytics and predictions.</p>
+            </div>
+
+            <div class="auth-card panel">
+                <h2 id="authTitle">Sign In</h2>
+                <p id="authSubTitle" class="muted">Use your account to continue.</p>
+
+                <div class="auth-toggle">
+                    <button id="showLoginBtn" class="btn ghost auth-switch active">Sign In</button>
+                    <button id="showSignupBtn" class="btn ghost auth-switch">Sign Up</button>
+                </div>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Email / Username</label>
+                        <input id="username" type="text" placeholder="Enter email or username">
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <div class="password-field-wrapper">
+                            <input id="password" type="password" placeholder="••••••••">
+                            <button type="button" class="password-toggle" data-target="password" aria-label="Toggle password visibility">
+                                <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle class="eye-open" cx="12" cy="12" r="3"></circle>
+                                    <path class="eye-closed" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line class="eye-closed" x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="confirmPasswordField" class="field hidden">
+                        <label>Confirm Password</label>
+                        <div class="password-field-wrapper">
+                            <input id="confirmPassword" type="password" placeholder="••••••••">
+                            <button type="button" class="password-toggle" data-target="confirmPassword" aria-label="Toggle password visibility">
+                                <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle class="eye-open" cx="12" cy="12" r="3"></circle>
+                                    <path class="eye-closed" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line class="eye-closed" x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="loginBtn" class="btn success">Sign In</button>
+                <button id="signupBtn" class="btn hidden">Sign Up</button>
+
+                <p class="muted auth-helper">
+                    <span id="helperSignupPrompt">Don’t have an account? <button id="helperSignupBtn" type="button" class="link-btn">Sign Up</button></span>
+                    <span id="helperLoginPrompt" class="hidden">Already have an account? <button id="helperLoginBtn" type="button" class="link-btn">Sign In</button></span>
+                </p>
+                <p id="loginStatus" class="status"></p>
+            </div>
+
+            <p class="auth-footer">© 2024 AI Business Intelligence Platform</p>
+        </section>
+
+        <section id="dashboardSection" class="hidden">
+            <section class="kpi-grid">
+                <article class="kpi-card green">
+                    <div id="kpiLabel1" class="kpi-label">Model Accuracy</div>
+                    <div id="statAccuracy" class="kpi-value">-</div>
+                </article>
+                <article class="kpi-card blue">
+                    <div id="kpiLabel2" class="kpi-label">Precision</div>
+                    <div id="statPrecision" class="kpi-value">-</div>
+                </article>
+                <article class="kpi-card purple">
+                    <div id="kpiLabel3" class="kpi-label">Recall</div>
+                    <div id="statRecall" class="kpi-value">-</div>
+                </article>
+                <article class="kpi-card orange">
+                    <div id="kpiLabel4" class="kpi-label">Predictions Made</div>
+                    <div id="statPredictions" class="kpi-value">0</div>
+                </article>
+            </section>
+
+            <!-- History mode banner – visible only when viewing a historical run -->
+            <div id="historyBanner" class="hidden">
+                <span id="historyBannerLabel">Viewing historical analysis</span>
+                <div class="history-banner-actions">
+                    <button id="exitHistoryBtn" class="btn ghost">Return to Dashboard</button>
+                    <button id="downloadReportBannerBtn" class="btn ghost">Download Report</button>
+                </div>
+            </div>
+
+            <section class="main-grid">
+                <article id="uploadPanel" class="panel card">
+                    <h3>Dataset Upload</h3>
+                    <div class="field">
+                        <label for="analysisType">Analysis Type</label>
+                        <select id="analysisType" title="Choose analysis type" aria-label="Analysis Type">
+                            <option value="churn">Customer Churn</option>
+                            <option value="sales">Sales Forecast</option>
+                            <option value="segmentation">Customer Segmentation</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="targetColumn">Target Column</label>
+                        <input id="targetColumn" type="text" placeholder="Leave blank for last column">
+                    </div>
+                    <div class="field">
+                        <label for="fileInput">Upload CSV File</label>
+                        <input id="fileInput" type="file" accept=".csv" title="Upload training CSV file" aria-label="Upload CSV File">
+                    </div>
+
+                    <div id="datasetRequirements" class="requirements-card" aria-live="polite">
+                        <div class="requirements-title">Dataset Requirements</div>
+                        <p id="requirementsColumns" class="requirements-columns"></p>
+                        <ul id="requirementsRules" class="requirements-rules"></ul>
+                    </div>
+
+                    <button id="uploadBtn" class="btn success">Train Model</button>
+                    <button id="restorePreviousBtn" class="btn ghost" disabled>&#8617; Restore Previous</button>
+                    <button id="downloadReportBtn" class="btn ghost">Download Report</button>
+                    <p class="hint">After selecting once, you can click Train Model again to retrain the same dataset.</p>
+                    <p id="trainingTimeBadge" class="training-time-badge">Elapsed time will appear here while training.</p>
+                    <p id="uploadStatus" class="status"></p>
+                </article>
+
+                <article id="predictionPanel" class="panel card">
+                    <h3>Make Prediction</h3>
+                    <div class="prediction-upload-box">
+                        <p class="hint">Upload a CSV dataset to predict all rows at once.</p>
+                        <label for="predictFileInput" class="sr-only">Upload prediction CSV file</label>
+                        <input id="predictFileInput" type="file" accept=".csv" title="Upload dataset for batch prediction" aria-label="Upload Prediction CSV File">
+                        <button id="predictUploadBtn" class="btn ghost">Predict from Dataset</button>
+                        <p id="predictionUploadStatus" class="status"></p>
+                        <div id="predictionUploadWrap" class="table-wrap"><p class="muted">No batch prediction yet.</p></div>
+                    </div>
+
+                    <div class="insight-box">
+                        <strong>Insight</strong>
+                        <p id="insightText" class="muted">Train a model to generate feature-driven business insights.</p>
+                    </div>
+                </article>
+
+                <article id="featureListPanel" class="panel card">
+                    <h3 id="featureListTitle">Feature Importance</h3>
+                    <div id="topFeaturesList" class="feature-list">
+                        <p class="muted">No feature importance yet.</p>
+                    </div>
+                </article>
+            </section>
+
+            <section id="metricsSection" class="analytics-grid">
+                <article id="modelMetricsPanel" class="panel card wide">
+                    <h3>Model Metrics</h3>
+                    <canvas id="modelMetricChart"></canvas>
+                    <div id="comparisonBox" class="comparison-box">No training run yet.</div>
+                </article>
+
+                <article id="clusterDistributionPanel" class="panel card wide">
+                    <h3>Customer Segmentation</h3>
+                    <canvas id="clusterDistributionChart"></canvas>
+                    <div id="clusterSummaryWrap" class="summary-list muted">Run training to view segment summary.</div>
+                </article>
+            </section>
+
+            <section id="salesTrendSection" class="panel card hidden">
+                <h3>Sales Trend</h3>
+                <canvas id="salesTrendChart"></canvas>
+            </section>
+
+            <section class="extras-grid">
+                <article id="featureChartPanel" class="panel card">
+                    <h3 id="featureChartTitle">Feature Importance Chart</h3>
+                    <canvas id="featureChart"></canvas>
+                </article>
+                <article id="clusterScatterPanel" class="panel card">
+                    <h3>Cluster Scatter</h3>
+                    <canvas id="clusterScatterChart"></canvas>
+                </article>
+                <article id="churnChartPanel" class="panel card">
+                    <h3>Churn Visualization</h3>
+                    <canvas id="churnChart"></canvas>
+                </article>
+                <article class="panel card">
+                    <h3>Dataset Records</h3>
+                    <div class="record-strip">
+                        <div>Total Records</div>
+                        <strong id="statRecords">0</strong>
+                    </div>
+                    <div class="record-strip">
+                        <div>Churn Rate</div>
+                        <strong id="statChurn">-</strong>
+                    </div>
+                    <div class="record-strip">
+                        <div>Best Model</div>
+                        <strong id="statBestModel">-</strong>
+                    </div>
+                </article>
+            </section>
+
+            <section class="panel card">
+                <h3>Dataset Preview</h3>
+                <div id="previewWrap" class="table-wrap"><p class="muted">Upload a CSV to view preview.</p></div>
+            </section>
+
+            <section class="panel card">
+                <h3>Training Analysis History</h3>
+                <div id="trainingHistoryWrap" class="table-wrap"><p class="muted">No training history yet.</p></div>
+            </section>
+
+            <section class="panel card">
+                <h3>Prediction History</h3>
+                <div class="history-filter-bar">
+                    <div class="field compact">
+                        <label for="historyTaskFilter">Task</label>
+                        <select id="historyTaskFilter" title="Filter by prediction task" aria-label="Filter prediction history by task">
+                            <option value="all">All</option>
+                            <option value="classification">Classification</option>
+                            <option value="regression">Regression</option>
+                            <option value="segmentation">Segmentation</option>
+                        </select>
+                    </div>
+                    <div class="field compact grow">
+                        <label for="historyDatasetFilter">Dataset</label>
+                        <input id="historyDatasetFilter" type="text" placeholder="Search dataset name">
+                    </div>
+                    <label class="history-last30-toggle" for="historyLast30Filter">
+                        <input id="historyLast30Filter" type="checkbox">
+                        Last 30 days
+                    </label>
+                    <button id="historyFilterResetBtn" class="btn ghost history-reset-btn" type="button">Reset</button>
+                </div>
+                <div id="historyWrap" class="table-wrap"><p class="muted">No predictions yet.</p></div>
+            </section>
+        </section>
+    </main>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
