@@ -8,7 +8,7 @@ import mysql.connector
 DB_HOST = os.getenv("AI_DB_HOST", "localhost")
 DB_PORT = int(os.getenv("AI_DB_PORT", "3306"))
 DB_USER = os.getenv("AI_DB_USER", "root")
-DB_PASSWORD = os.getenv("AI_DB_PASSWORD", "24#2006")
+DB_PASSWORD = os.getenv("AI_DB_PASSWORD", "your_password")
 DB_NAME = os.getenv("AI_DB_NAME", "ai_platform")
 
 
